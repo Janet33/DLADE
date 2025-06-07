@@ -29,21 +29,6 @@ The core idea of DLADE is to evaluate how well clusters and outliers align with 
       
 4.  **`README.md`**: Provides an overview of the research and code structure.
 5.  **`requirements.txt`:** All Python package dependencies and their versions used.
-
-DLADE/
-├── dlade_framework.py  
-├── DBCV.py
-├── datasets/
-│   ├── Aggregation.txt
-│   ├── R15.txt
-│   ├── seeds_dataset.txt
-│   ├── brca.csv
-│   ├── glass.csv
-│   └── Wine-qt.csv
-└── results/               (this will be created by the script)
-    └── dlade_results_7datasets/ (sub-directory for a run's results)
-├── README.md
-├── requirements.txt
     
 ## Installation
 
