@@ -965,7 +965,7 @@ if __name__ == "__main__":
             overall_metrics_for_demo_dict['n_clusters_found'] = n_clusters_found_for_demo
 
             ov_z_demo_recalc = overall_metrics_for_demo_dict.get('OverallClust_AvgDens_Z')
-            s_z_demo_recalc = overall_metrics_for_demo_dict.get('Sep_OverallMinPath_Z') # Updated key
+            s_z_demo_recalc = overall_metrics_for_demo_dict.get('Sep_OverallMinPath_Z')
             ddsi_psi_demo_recalc = np.nan
             if ov_z_demo_recalc is not None and np.isfinite(ov_z_demo_recalc):
                 if n_clusters_found_for_demo >= 2 and s_z_demo_recalc is not None and np.isfinite(s_z_demo_recalc):
