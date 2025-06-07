@@ -44,8 +44,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 import os
-import sys 
+import sys # Keep for sys.path manipulation if DBCV.py is elsewhere or for CLI args later
 import ast
+
 from DBCV import DBCV 
 
 # --- Local Path Configuration ---
@@ -178,7 +179,7 @@ def load_dataset(filename, data_directory, delimiter='\t', skip_header=0, label_
         try:
             df = pd.read_csv(filepath, delimiter=delimiter, header=None, skiprows=skip_header)
         except pd.errors.ParserError:
-            df = pd.read_csv(filepath, delimiter='\s+', header=None, skiprows=skip_header, engine='python')
+            df = pd.read_csv(filepath, delimiter=r'\s+', header=None, skiprows=skip_header, engine='python')
         except FileNotFoundError:
             print(f"Error: File {filename} not found at {filepath}.")
             return None, None
@@ -790,7 +791,7 @@ if r15_data_full is not None:
 else: print("R15 dataset not loaded, skipping.")
 
 # 4. Seeds
-seeds_data_full, _ = load_dataset('seeds_dataset.txt', DATA_DIR, delimiter='\s+', skip_header=0, label_col=-1)
+seeds_data_full, _ = load_dataset('seeds_dataset.txt', DATA_DIR, delimiter=r'\s+', skip_header=0, label_col=-1)
 if seeds_data_full is not None:
     datasets_to_run["Seeds"] = seeds_data_full
     fixed_clustering_params["Seeds"] = {"DBSCAN": {"eps": 0.8, "min_samples": 7}, "OPTICS": {"min_samples": 7, "xi": 0.04, "min_cluster_size": 0.05}, "MeanShift": {"bandwidth": None}}
@@ -965,7 +966,7 @@ if __name__ == "__main__":
             overall_metrics_for_demo_dict['n_clusters_found'] = n_clusters_found_for_demo
 
             ov_z_demo_recalc = overall_metrics_for_demo_dict.get('OverallClust_AvgDens_Z')
-            s_z_demo_recalc = overall_metrics_for_demo_dict.get('Sep_OverallMinPath_Z')
+            s_z_demo_recalc = overall_metrics_for_demo_dict.get('Sep_OverallMinPath_Z') 
             ddsi_psi_demo_recalc = np.nan
             if ov_z_demo_recalc is not None and np.isfinite(ov_z_demo_recalc):
                 if n_clusters_found_for_demo >= 2 and s_z_demo_recalc is not None and np.isfinite(s_z_demo_recalc):
@@ -1054,15 +1055,15 @@ if __name__ == "__main__":
 
             print("\n--- All Evaluation Framework Metrics ---")
             overall_metrics_full_subset = {
-                '1. Average density for union of all clusters CX (psi)': run_details['overall_metrics'].get('OverallClust_AvgDens_psi'),
-                '2. Normalized (z-score) of average cluster density ($Z(\mu_{CX,\\psi})$)': run_details['overall_metrics'].get('OverallClust_AvgDens_Z'),
-                '5a. Overall density variation for clustering X (std dev across clustered points, psi)': run_details['overall_metrics'].get('OverallClust_DensVar_psi'),
-                '5b. Overall density variation for clustering X (weighted within, psi)': run_details['overall_metrics'].get('OverallClust_WeightedDensVar_psi'),
-                '6. Average density for Out(X) (psi)': run_details['overall_metrics'].get('Outlier_AvgDens_psi'),
-                '7. Normalized (z-score) for Average density for Out(X) ($Z(\mu_{Out(X),\\psi})$)': run_details['overall_metrics'].get('Outlier_AvgDens_Z'),
-                '8. Minimum Density along a Straight Line Path (psi)': run_details['overall_metrics'].get('Sep_OverallMinPath_psi'), 
-                '9. Overall Cluster Separation Metric ($Z(Sep_{min})$)': run_details['overall_metrics'].get('Sep_OverallMinPath_Z'),
-                '10. DDSI_psi': run_details['overall_metrics'].get('DDSI_psi')
+                r'1. Average density for union of all clusters CX (psi)': run_details['overall_metrics'].get('OverallClust_AvgDens_psi'),
+                r'2. Normalized (z-score) of average cluster density ($Z(\mu_{CX,\\psi})$)': run_details['overall_metrics'].get('OverallClust_AvgDens_Z'),
+                r'5a. Overall density variation for clustering X (std dev across clustered points, psi)': run_details['overall_metrics'].get('OverallClust_DensVar_psi'),
+                r'5b. Overall density variation for clustering X (weighted within, psi)': run_details['overall_metrics'].get('OverallClust_WeightedDensVar_psi'),
+                r'6. Average density for Out(X) (psi)': run_details['overall_metrics'].get('Outlier_AvgDens_psi'),
+                r'7. Normalized (z-score) for Average density for Out(X) ($Z(\mu_{Out(X),\\psi})$)': run_details['overall_metrics'].get('Outlier_AvgDens_Z'),
+                r'8. Minimum Density along a Straight Line Path (psi)': run_details['overall_metrics'].get('Sep_OverallMinPath_psi'), 
+                r'9. Overall Cluster Separation Metric ($Z(Sep_{min})$)': run_details['overall_metrics'].get('Sep_OverallMinPath_Z'),
+                r'10. DDSI_psi': run_details['overall_metrics'].get('DDSI_psi')
             }
             print_metric_table_demo(overall_metrics_full_subset, "Overall Metrics for Clustering:")
 
@@ -1083,12 +1084,12 @@ if __name__ == "__main__":
                         'Cluster ID': cluster_id,
                         'Size': metrics['Size'],
                         '1. Average density for cluster Ci (psi)': metrics['AvgDens_psi'],
-                        '3. Normalized (z-score) of Avg Cluster Density ($Z(\mu_{Ci,\\psi})$)': metrics['AvgDens_Z'],
+                        r'3. Normalized (z-score) of Avg Cluster Density ($Z(\mu_{Ci,\\psi})$)': metrics['AvgDens_Z'],
                         '4. Density standard deviation for cluster Ci (psi)': metrics['DensVar_psi']
                     })
             if per_cluster_table_data:
                 df_per_cluster = pd.DataFrame(per_cluster_table_data)
-                for col in ['1. Average density for cluster Ci (psi)', '3. Normalized (z-score) of Avg Cluster Density ($Z(\mu_{Ci,\\psi})$)', '4. Density standard deviation for cluster Ci (psi)']:
+                for col in [r'1. Average density for cluster Ci (psi)', r'3. Normalized (z-score) of Avg Cluster Density ($Z(\mu_{Ci,\\psi})$)', r'4. Density standard deviation for cluster Ci (psi)']:
                     if col in df_per_cluster:
                          df_per_cluster[col] = df_per_cluster[col].apply(lambda x: f"{x:.4f}" if isinstance(x, (float, np.float64)) and np.isfinite(x) else str(x))
                 print(df_per_cluster.to_string(index=False))
