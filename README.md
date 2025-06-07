@@ -1,4 +1,4 @@
-# DLADE
+# DLADE: Dataset Landscape Density Evaluation Framework
 ***
 
 The code of the paper, DLADE: A Cluster Quality Evaluation Framework leveraging Dataset Density Functions
