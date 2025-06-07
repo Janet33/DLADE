@@ -1,5 +1,4 @@
 # DLADE
-
 ***
 
 The code of the paper, DLADE: A Cluster Quality Evaluation Framework leveraging Dataset Density Functions
@@ -34,7 +33,7 @@ The core idea of DLADE is to evaluate how well clusters and outliers align with 
 
 ## Installation
 
-1. Install the required packages. If `requirements.txt` is provided:
+1. Install the required packages. `requirements.txt` has been provided:
     ```bash
     pip install -r requirements.txt
     ```
@@ -55,13 +54,13 @@ The core idea of DLADE is to evaluate how well clusters and outliers align with 
     *   Perform hyperparameter tuning for DBSCAN, OPTICS, and MeanShift using Silhouette score.
     *   Run clustering with the best-tuned parameters.
     *   Evaluate results using DLADE metrics and baseline internal validation indices for four different KDE configurations.
-    *   Save detailed results (metrics) as CSV files and clustering plots (for 2D data) as PNG files into the `results/12_dlade_results_7datasets/` directory.
+    *   Save detailed results (metrics) as CSV files and clustering plots (for 2D data) as PNG files into the `results/dlade_results_7datasets/` directory.
     *   Print summary analyses and a demonstration of DLADE metrics to the console.
 
 ## Output
 
 -   **Console Output:** Progress updates, summary tables, and demo section printouts.
--   **`results/12_dlade_results_7datasets/` directory:**
+-   **`results/dlade_results_7datasets/` directory:**
     -   CSV files: `[DatasetName]_[KDE_ConfigName]_evaluation_primary_tuned.csv` containing detailed metrics for each algorithm run.
     -   PNG files: `[DatasetName]_[AlgoName]_Psi_[KDE_ConfigName]_tuned_plot.png` visualizing 2D clustering results with KDE contours.
 
