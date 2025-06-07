@@ -10,7 +10,7 @@ Estimate (KDE), alongside traditional internal validation indices.
 The framework operates as follows:
 1. Loads and preprocesses datasets.
 2. For each dataset and each specified KDE configuration:
-    a. Estimates a dataset-wide density function (psi).
+    a. Estimates a density function (psi).
     b. Calculates overall statistics (mean, std dev) of this psi.
     c. For each clustering algorithm (DBSCAN, OPTICS, MeanShift):
         i. Tunes hyperparameters using Silhouette score.
@@ -137,7 +137,7 @@ def plot_clusters_and_kde(data, labels, kde_psi_estimator_2d, dataset_name,
 
         axes[1].contourf(xx, yy, zz, cmap='viridis', levels=15, alpha=0.8)
         axes[1].contour(xx, yy, zz, colors='k', linewidths=0.5, levels=15)
-        axes[1].set_title(f'Dataset-wide KDE Map ({psi_estimator_name_text if psi_estimator_name_text else "Default Psi"})')
+        axes[1].set_title(f'KDE Map ({psi_estimator_name_text if psi_estimator_name_text else "Default Psi"})')
 
         for ax_curr in axes:
             ax_curr.set_xlim(x_min, x_max)
@@ -650,7 +650,7 @@ def run_experiment(dataset_name, data_raw,
         print(f"\n\n=== Using Psi Estimator: {psi_estimator_name} for Dataset: {dataset_name} ===")
         current_kde_psi_estimator = create_kde_estimator(data_scaled, kde_config['kernel'], kde_config['bandwidth_method'])
         mu_O_psi, sigma_O_psi, psi_O_values = calculate_dataset_density_stats(data_scaled, current_kde_psi_estimator) 
-        print(f"Dataset-wide stats for {psi_estimator_name}: mu_O_psi={mu_O_psi:.4f}, sigma_O_psi={sigma_O_psi:.4f}")
+        print(f"Stats for {psi_estimator_name}: mu_O_psi={mu_O_psi:.4f}, sigma_O_psi={sigma_O_psi:.4f}")
 
         results_for_this_psi_estimator = {}
 
@@ -1049,9 +1049,9 @@ if __name__ == "__main__":
             plot_placeholder = f"{plot_base_name}_{run_details['algo_name']}_{run_details['psi_estimator_name']}_plot.png"
             print(f"Plot placeholder: {plot_placeholder}")
 
-            print(f"\nDataset-wide Density Statistics (for {run_details['psi_estimator_name']}):")
-            print(f"  Mean Dataset-wide Density (mu_O_psi): {run_details['mu_O_psi']:.4f}")
-            print(f"  Std Dev Dataset-wide Density (sigma_O_psi): {run_details['sigma_O_psi']:.4f}")
+            print(f"\nDensity Statistics (for {run_details['psi_estimator_name']}):")
+            print(f"  Mean Density (mu_O_psi): {run_details['mu_O_psi']:.4f}")
+            print(f"  Std Dev Density (sigma_O_psi): {run_details['sigma_O_psi']:.4f}")
 
             print("\n--- All Evaluation Framework Metrics ---")
             overall_metrics_full_subset = {
